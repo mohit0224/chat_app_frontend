@@ -3,8 +3,9 @@ import axios from "axios";
 import React from "react";
 
 const Page = () => {
+	
 	const axiosInstance = axios.create({
-		baseURL: `/api/v1`,
+		baseURL: `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/v1`,
 		withCredentials: true,
 		headers: {
 			"Content-Type": "application/json",
