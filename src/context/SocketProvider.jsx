@@ -7,8 +7,8 @@ const SocketContext = createContext();
 
 export const SocketProvider = ({ children }) => {
 	const [socket, setSocket] = useState(null);
-	const [howIsOnline, setHowIsOnline] = useState([]);
-	console.log("🚀 ~ SocketProvider ~ howIsOnline:", howIsOnline)
+	const [whoIsOnline, setWhoIsOnline] = useState([]);
+	console.log("🚀 ~ SocketProvider ~ whoIsOnline:", whoIsOnline);
 
 	useEffect(() => {
 		const socket = io(process.env.NEXT_PUBLIC_BACKEND_URI, {
@@ -19,7 +19,7 @@ export const SocketProvider = ({ children }) => {
 		});
 		setSocket(socket);
 
-		socket.on("howIsOnline", (data) => setHowIsOnline(data));
+		socket.on("whoIsOnline", (data) => setWhoIsOnline(data));
 
 		return () => {
 			socket.disconnect();
