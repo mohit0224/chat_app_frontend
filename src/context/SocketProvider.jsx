@@ -11,7 +11,7 @@ export const SocketProvider = ({ children }) => {
 	console.log("🚀 ~ SocketProvider ~ howIsOnline:", howIsOnline)
 
 	useEffect(() => {
-		const socket = io("http://localhost:8000/", {
+		const socket = io(process.env.NEXT_PUBLIC_BACKEND_URI, {
 			auth: {
 				userId: "dsv",
 			},
