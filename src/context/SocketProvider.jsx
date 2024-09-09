@@ -8,36 +8,48 @@ import useMessageStore from "@/store/messageStore";
 const SocketContext = createContext();
 
 export const SocketProvider = ({ children }) => {
-	const [socket, setSocket] = useState();
+	const [socket, setSocket] = useState(null);
 	const [whoIsOnline, setWhoIsOnline] = useState([]);
 	const currentUser = useLoggedInUser((state) => state.loggedInUser);
 
 	const addNewMessages = useMessageStore((state) => state.addNewMessages);
-	const getMessages = useMessageStore((state) => state.getMessages);
 
 	useEffect(() => {
 		const token = localStorage.getItem("token");
-		if (token) {
-			const socket = io(process.env.NEXT_PUBLIC_BACKEND_URI, {
+		if (token && currentUser?._id) {
+			const socketInstance = io(process.env.NEXT_PUBLIC_BACKEND_URI, {
 				auth: {
 					userId: currentUser?._id,
 				},
 				withCredentials: true,
 			});
-			setSocket(socket);
+			setSocket(socketInstance);
 
-			socket.on("whoIsOnline", (data) => setWhoIsOnline(data));
+			socketInstance.on("whoIsOnline", (data) => setWhoIsOnline(data));
+			socketInstance.on("connect_error", (error) => {
+				console.error("Socket connection error:", error);
+			});
+
 			return () => {
-				socket.disconnect();
+				if (socketInstance) {
+					socketInstance.close();
+				}
 			};
 		}
 	}, [currentUser]);
 
 	useEffect(() => {
-		socket?.on("newMessage", (message) => {
-			addNewMessages(message);
-		});
-	}, [socket?.connected]);
+		if (socket) {
+			socket.on("newMessage", (message) => {
+				addNewMessages(message);
+			});
+
+			// Clean up the event listener when socket changes
+			return () => {
+				socket.off("newMessage");
+			};
+		}
+	}, [socket]);
 
 	return (
 		<SocketContext.Provider value={{ socket, whoIsOnline }}>
