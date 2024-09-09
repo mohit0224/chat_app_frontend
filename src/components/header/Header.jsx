@@ -53,7 +53,7 @@ const Header = () => {
 					<nav>
 						<ul className="flex items-center gap-3">
 							<li>
-								<Link href={"/profile"}>Profile</Link>
+								<Link href={"/"}>Profile</Link>
 							</li>
 							<li>{loggedInUser?.username}</li>
 							<ModeToggle />

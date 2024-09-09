@@ -44,7 +44,6 @@ export const SocketProvider = ({ children }) => {
 				addNewMessages(message);
 			});
 
-			// Clean up the event listener when socket changes
 			return () => {
 				socket.off("newMessage");
 			};
