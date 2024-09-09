@@ -23,10 +23,7 @@ export const SocketProvider = ({ children }) => {
 					userId: currentUser?._id,
 				},
 				withCredentials: true,
-				transports:
-					process.env.NODE_ENV === "production"
-						? ["websocket"]
-						: ["polling", "websocket"], // Using WebSocket for production is a best practice
+				transports: ["polling", "websocket"], // Using WebSocket for production is a best practice
 				reconnectionAttempts: 5, // Limit the reconnection attempts
 				reconnectionDelay: 3000, // Using WebSocket for production is a best practice
 			});
