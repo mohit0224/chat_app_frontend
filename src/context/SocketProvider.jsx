@@ -23,7 +23,8 @@ export const SocketProvider = ({ children }) => {
 					userId: currentUser?._id,
 				},
 				withCredentials: true,
-				// transports: ["websocket", "polling"],
+				// transports: ["websocket"],
+				timeout: 5000,
 			});
 			setSocket(socket);
 
