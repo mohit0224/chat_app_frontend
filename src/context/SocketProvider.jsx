@@ -2,31 +2,49 @@
 
 import { io } from "socket.io-client";
 import { createContext, useContext, useEffect, useState } from "react";
+import useLoggedInUser from "@/store/loggedInUserStore";
+import useMessageStore from "@/store/messageStore";
 
 const SocketContext = createContext();
 
 export const SocketProvider = ({ children }) => {
-	const [socket, setSocket] = useState(null);
+	const [socket, setSocket] = useState();
 	const [whoIsOnline, setWhoIsOnline] = useState([]);
-	console.log("🚀 ~ SocketProvider ~ whoIsOnline:", whoIsOnline);
+	const currentUser = useLoggedInUser((state) => state.loggedInUser);
+
+	const addNewMessages = useMessageStore((state) => state.addNewMessages);
+	const getMessages = useMessageStore((state) => state.getMessages);
 
 	useEffect(() => {
-		const socket = io(process.env.NEXT_PUBLIC_BACKEND_URI, {
-			auth: {
-				userId: "dsv",
-			},
-			withCredentials: true,
+		const token = localStorage.getItem("token");
+		if (token) {
+			const socket = io(process.env.NEXT_PUBLIC_BACKEND_URI, {
+				auth: {
+					userId: currentUser?._id,
+				},
+				withCredentials: true,
+				transports: ["websocket", "polling"],
+			});
+			setSocket(socket);
+
+			socket.on("whoIsOnline", (data) => setWhoIsOnline(data));
+			return () => {
+				socket.disconnect();
+			};
+		}
+	}, [currentUser]);
+
+	useEffect(() => {
+		socket?.on("newMessage", (message) => {
+			addNewMessages(message);
 		});
-		setSocket(socket);
+	}, [socket?.connected]);
 
-		socket.on("whoIsOnline", (data) => setWhoIsOnline(data));
-
-		return () => {
-			socket.disconnect();
-		};
-	}, []);
-
-	return <SocketContext.Provider value={{}}>{children}</SocketContext.Provider>;
+	return (
+		<SocketContext.Provider value={{ socket, whoIsOnline }}>
+			{children}
+		</SocketContext.Provider>
+	);
 };
 
 const useSocket = () => useContext(SocketContext);
