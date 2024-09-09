@@ -18,13 +18,18 @@ export const SocketProvider = ({ children }) => {
 	useEffect(() => {
 		const token = localStorage.getItem("token");
 		if (token) {
+			console.log(process.env.NODE_ENV === "production");
+			
 			const socket = io(process.env.NEXT_PUBLIC_BACKEND_URI, {
 				auth: {
 					userId: currentUser?._id,
 				},
 				withCredentials: true,
-				// transports: ["websocket"],
-				timeout: 5000,
+				transports: process.env.NODE_ENV === "production" && ["websocket"], // Using WebSocket for production is a best practice
+				reconnectionAttempts: 5, // Limit the reconnection attempts
+				reconnectionDelay: 3000, // Using WebSocket for production is a best practice
+				reconnectionAttempts: 5, // Limit the reconnection attempts
+				reconnectionDelay: 3000,
 			});
 			setSocket(socket);
 
