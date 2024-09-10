@@ -1,4 +1,10 @@
 {
 	"version": 2,
-	"builds": [{ "src": "next.config.js", "use": "@vercel/next" }]
+	"builds": [{ "src": "next.config.js", "use": "@vercel/next" }],
+	"rewrites": [
+		{
+			"source": "/api/v1/(.*)",
+			"destination": "https://test-back-igb0.onrender.com/api/v1/$1"
+		}
+	]
 }
