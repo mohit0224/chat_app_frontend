@@ -28,7 +28,7 @@ const SearchUser = () => {
 				</SheetHeader>
 				<div className="mt-5 space-y-3 w-full">
 					{getAllUsers.map((user, i) => (
-						<SheetClose className="w-full block text-start">
+						<SheetClose className="w-full block text-start" key={i}>
 							<UserCard data={user} key={i} />
 						</SheetClose>
 					))}
