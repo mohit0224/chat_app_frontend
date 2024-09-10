@@ -21,7 +21,7 @@ const ChatCard = ({ data }) => {
 				} `}
 			>
 				<Card
-					className={`inline-flex max-w-[400px] px-5 py-2 rounded-none rounded-b-2xl
+					className={`inline-flex max-w-[400px] px-5 py-2 rounded-none rounded-t-2xl
 					${data.senderID === loggedInUser?._id ? "rounded-l-2xl " : "rounded-r-2xl "}
 					`}
 				>

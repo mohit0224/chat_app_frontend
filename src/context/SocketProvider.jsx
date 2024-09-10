@@ -4,6 +4,7 @@ import { io } from "socket.io-client";
 import { createContext, useContext, useEffect, useState } from "react";
 import useLoggedInUser from "@/store/loggedInUserStore";
 import useMessageStore from "@/store/messageStore";
+import useGetAllUsers from "@/store/getAllUserStore";
 
 const SocketContext = createContext();
 
@@ -11,8 +12,10 @@ export const SocketProvider = ({ children }) => {
 	const [socket, setSocket] = useState(null);
 	const [whoIsOnline, setWhoIsOnline] = useState([]);
 	const currentUser = useLoggedInUser((state) => state.loggedInUser);
-
 	const addNewMessages = useMessageStore((state) => state.addNewMessages);
+	const updateConversationsUser = useGetAllUsers(
+		(state) => state.updateConversationsUser
+	);
 
 	useEffect(() => {
 		const token = localStorage.getItem("token");
@@ -42,6 +45,10 @@ export const SocketProvider = ({ children }) => {
 		if (socket) {
 			socket.on("newMessage", (message) => {
 				addNewMessages(message);
+			});
+
+			socket.on("newConversationUser", (data) => {
+				updateConversationsUser(data);
 			});
 
 			return () => {

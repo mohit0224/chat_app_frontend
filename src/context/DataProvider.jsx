@@ -34,7 +34,9 @@ export const DataProvider = ({ children }) => {
 	const addCurrentUser = useLoggedInUser((state) => state.getUser);
 	const removeCurrentUser = useLoggedInUser((state) => state.removeUser);
 	const setAllUsers = useGetAllUsers((state) => state.setAllUsers);
-
+	const setConversationsUser = useGetAllUsers(
+		(state) => state.setConversationsUser
+	);
 	const setAllMessages = useMessageStore((state) => state.setAllMessages);
 
 	const getCurrentUserFnc = async () => {
@@ -55,9 +57,20 @@ export const DataProvider = ({ children }) => {
 		}
 	};
 
+	const getConversationUserFnc = async () => {
+		try {
+			const res = await authServices.getConversationUsers();
+			setConversationsUser(res.data.data);
+		} catch (err) {
+			setConversationsUser([]);
+		}
+	};
+
 	const getClickedUserChatMessage = async () => {
 		try {
-			const res = await messageServices.getChatMessages(clickedUserDetails?._id);
+			const res = await messageServices.getChatMessages(
+				clickedUserDetails?._id
+			);
 			setAllMessages(res.data.data);
 		} catch (err) {
 			setAllMessages([]);
@@ -75,6 +88,7 @@ export const DataProvider = ({ children }) => {
 		if (isToken) {
 			getCurrentUserFnc();
 			getAllUserFnc();
+			getConversationUserFnc();
 		}
 	}, [isLoggedIn]);
 

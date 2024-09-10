@@ -7,6 +7,7 @@ class authService {
 
 	loggedInUser = async () => await axiosInstance.get("/users");
 	getAllUsers = async () => await axiosInstance.get("/users/get-all-users");
+	getConversationUsers = async () => await axiosInstance.get("/users/get-conversation-user");
 }
 
 const authServices = new authService();

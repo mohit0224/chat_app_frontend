@@ -4,10 +4,13 @@ import Header from "@/components/header/Header";
 import UserCard from "./UserCard";
 import useGetAllUsers from "@/store/getAllUserStore";
 import useData from "@/context/DataProvider";
+import SearchUser from "./SearchUser";
 
 export default function RootLayout({ children }) {
 	const { isChatOpen } = useData();
-	const getUserData = useGetAllUsers((state) => state.allUsers);
+	const getConversationsUser = useGetAllUsers(
+		(state) => state.getConversationsUser
+	);
 
 	return (
 		<>
@@ -20,9 +23,12 @@ export default function RootLayout({ children }) {
 								${isChatOpen && "hidden"}
 							`}
 					>
-						{getUserData.map((data, i) => (
-							<UserCard data={data} key={i} />
-						))}
+						<SearchUser />
+						{getConversationsUser.map((users) =>
+							users.participants.map((user, i) => (
+								<UserCard data={user} key={i} />
+							))
+						)}
 					</div>
 
 					<div
