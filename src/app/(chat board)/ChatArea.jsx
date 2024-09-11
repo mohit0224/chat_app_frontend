@@ -16,7 +16,7 @@ const ChatArea = () => {
 	return (
 		<div
 			ref={showLastMessageRef}
-			className="hideScrollBar media  h-[calc(100vh-80px)] flex flex-col space-y-3 overflow-y-scroll p-5  pt-24"
+			className="hideScrollBar h-[calc(100%-80px)] flex flex-col space-y-3 overflow-y-scroll p-5  "
 		>
 			{readMessages.length === 0 ? (
 				<div className="text-center">
