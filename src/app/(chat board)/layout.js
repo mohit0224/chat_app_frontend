@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
 			<div className="h-screen w-screen fixed top-0 left-0 right-0 pt-20">
 				<div className="h-full flex">
 					<div
-						className={`hideScrollBar lg:block w-full lg:w-3/12 h-full overflow-y-scroll border-r p-5 space-y-3
+						className={`lg:block w-full lg:w-3/12 h-full overflow-y-scroll border-r p-5 space-y-3
 								${isChatOpen && "hidden"}
 							`}
 					>
@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
 					</div>
 
 					<div
-						className={`hideScrollBar h-full w-full flex-1 lg:block
+						className={`h-full w-full flex-1 lg:block
 							${!isChatOpen && "hidden"}
 						`}
 					>
