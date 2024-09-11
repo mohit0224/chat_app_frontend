@@ -10,10 +10,10 @@ const Page = () => {
 	return (
 		<>
 			{isChatOpen ? (
-				<div className="h-full w-full relative">
+				<div className=" w-full ">
 					<ChatArea />
 
-					<div className="absolute bottom-0 w-full h-20 bg-slate-100 dark:bg-slate-900 px-5 border-t ">
+					<div className=" w-full h-20 bg-slate-100 dark:bg-slate-900 px-5 border-t ">
 						<InputBox />
 					</div>
 				</div>

@@ -70,3 +70,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+@media only screen and (min-height: 900px) and (max-height: 9300px)  {
+
+
+  .media{
+    height: calc(100vh - 275px) !important;
+  }
+}
