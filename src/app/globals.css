@@ -26,6 +26,11 @@
   height: calc(78vh - 80px) !important;
  }
 }
+@media  (width: 393px) and (height: 852px) {
+ .mediaCss{
+  height: calc(78vh - 80px) !important;
+ }
+}
 
 @layer base {
   :root {
