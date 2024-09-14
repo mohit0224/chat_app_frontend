@@ -10,7 +10,7 @@ const Page = () => {
 	return (
 		<>
 			{isChatOpen ? (
-				<div className="h-full w-full relative">
+				<div className="h-full w-full relative overflow-y-scroll">
 					<ChatArea />
 
 					<div className=" w-full h-20 bg-slate-500 dark:bg-slate-900 px-5 border-t ">
