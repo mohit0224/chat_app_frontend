@@ -16,7 +16,7 @@ const ChatArea = () => {
 	return (
 		<div
 			ref={showLastMessageRef}
-			className=" h-[calc(100%-80px)] flex flex-col space-y-3 overflow-y-scroll p-5  "
+			className="h-[calc(100%-80px)] flex flex-col space-y-3 overflow-y-scroll p-5  mediaCss"
 		>
 			{readMessages.length === 0 ? (
 				<div className="text-center">

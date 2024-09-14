@@ -6,6 +6,27 @@
   display: none;
 }
 
+@media  (width: 430px) and (height: 932px) {
+ .mediaCss{
+  height: calc(71vh - 80px) !important;
+ }
+}
+@media  (width: 412px) and (height: 915px) {
+ .mediaCss{
+  height: calc(72vh - 80px) !important;
+ }
+}
+@media  (width: 414px) and (height: 896px) {
+ .mediaCss{
+  height: calc(74vh - 80px) !important;
+ }
+}
+@media  (width: 390px) and (height: 844px) {
+ .mediaCss{
+  height: calc(78vh - 80px) !important;
+ }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
